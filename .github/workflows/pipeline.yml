@@ -16,10 +16,10 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm ci
+        run: pnpm ci
       - name: Prettier Format
-        run: npm run prettier:format
+        run: pnpm run prettier:format
       - name: Prettier Check
-        run: npm run prettier:check
+        run: pnpm run prettier:check
       - name: Build
-        run: npm run build
+        run: pnpm run build
