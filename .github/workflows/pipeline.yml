@@ -16,8 +16,10 @@ jobs:
         with:
           node-version: 18
       - name: Install dependencies
-        run: npm install --no-audit --no-fund --no-optional
+        run: npm ci
       - name: Prettier Format
         run: npm run prettier:format
       - name: Prettier Check
         run: npm run prettier:check
+      - name: Build
+        run: npm run build
