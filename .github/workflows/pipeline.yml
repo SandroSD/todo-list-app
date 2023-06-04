@@ -25,8 +25,6 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
-      - name: Print ENV
-        run: echo ${{ secrets.VERCEL_ORG_ID }} ${{ secrets.VERCEL_PROJECT_ID }}
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information

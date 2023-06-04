@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = () => {
 	return (
 		<>
 			<div className='font-serif text-4xl font-bold text-center'>
-				Todo List App
+				Todo List App Change...
 			</div>
 			<div className='my-5 h-8 flex flex-row'>
 				<div className='basis-3/4 mr-5'>
