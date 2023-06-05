@@ -11,13 +11,36 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  deploy:
+  avoid_reduncy:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Redundant Builds
         uses: styfle/cancel-workflow-action@0.9.1
         with:
           access_token: ${{ github.token }} # Avoid parallel builds.
+
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Prettier Format
+        run: pnpm run prettier:format
+      - name: Prettier Check
+        run: pnpm run prettier:check
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -31,6 +54,19 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    needs: [prettier, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
