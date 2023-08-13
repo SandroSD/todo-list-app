@@ -3,31 +3,32 @@ import { IItem, TodoContextType } from '../../context/context.interface';
 import { TodoContext } from '../../context/todoListAppContext';
 
 export type TaskProps = {
-	key: number;
 	item: IItem;
 };
 
-const Task: React.FC<TaskProps> = ({ key, item }) => {
+const Task: React.FC<TaskProps> = ({ item }) => {
 	const { handleCompleteTask, handleDeleteTask } = useContext(
 		TodoContext
 	) as TodoContextType;
 
 	return (
 		<div
-			key={key}
-			className='border-2 border-black my-2 rounded-lg flex p-2'
+			className={`border-2 border-black my-2 rounded-lg flex p-2 ${
+				item.isSelected ? 'bg-gray-300' : ''
+			}`}
 		>
 			<div className='px-3 flex items-center'>
 				<input
 					type='checkbox'
 					name='checked'
+					className=''
 					checked={item.isSelected}
 					onChange={() => handleCompleteTask(item.uuid)}
 				/>
 			</div>
-			<div className='grow pt-1'>
+			<div className='grow pt-1 text-base'>
 				<div>{item.content}</div>
-				<div className='text-xs flex justify-center text-gray-400'>
+				<div className='text-xs flex justify-center text-gray-400 italic font-bold'>
 					Created at: {item.createdAt.toLocaleString()}
 				</div>
 			</div>

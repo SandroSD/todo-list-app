@@ -9,11 +9,11 @@ const List: React.FC<ListProps> = () => {
 	const { list } = useContext(TodoContext) as TodoContextType;
 
 	return (
-		<div className='text-center'>
-			{list.map((item, index) => {
+		<div className='text-center h-full overflow-y-auto flex-shrink-0'>
+			{list.map((item) => {
 				return (
 					<Task
-						key={index}
+						key={item.uuid}
 						item={item}
 					/>
 				);
